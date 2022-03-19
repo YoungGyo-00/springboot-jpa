@@ -1,5 +1,6 @@
 package com.example.springjpa.repository;
 
+import com.example.springjpa.domain.Gender;
 import com.example.springjpa.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -76,5 +77,33 @@ class UserRepositoryTest {
         System.out.println("findTopByName : " + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
         System.out.println("findTopByName : " + userRepository.findTopByName("lee", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
         System.out.println("findByNameWithPaging : " + userRepository.findByName("lee", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
+
+    @Test
+    void insertAndUpdateTest(){
+        User user = new User();
+
+        user.setName("martin");
+        user.setEmail("martin@gmail.com");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("update");
+
+        userRepository.save(user2);
+    }
+
+    @Test
+    void enumTest(){
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
+
     }
 }

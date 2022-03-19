@@ -3,12 +3,12 @@ JPA 끄적끄적
 
 ---
 ## 필요 개념
+###Entity
+* DB에 저장하기 위해 유저가 정의한 클래스 -> Domain
+* 일반적으로 RDBMS에서 Table을 객체화
+* [Entity & Mapping 참고자료](https://gmlwjd9405.github.io/2019/08/11/entity-mapping.html)
+---
 ### JPA CRUD
-* Entity
-  * DB에 저장하기 위해 유저가 정의한 클래스 -> Domain
-  * 일반적으로 RDBMS에서 Table을 객체화
-
-
 * JpaRepository interface 상속(Repository)
   * 기본적으로 CRUD가 가능하도록 제공.
   * Spring Data JPA에서ㅓ 제공하는 JpaRepository 인터페이스 상속 시, @Repository (x)
@@ -30,6 +30,8 @@ JPA 끄적끄적
 * [쿼리 메소드 필터 조건 공식 문서](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
   * Spring Data JPA -> Method name을 분석하여, JPQL을 생성 후 실행 -> 코드 간결
   ![Query Method filter](./src/main/resources/static/QueryMethod.png)
+  
+---
 ### Embedded H2
 * H2 Database : 자바 기반의 초 경량 RDBMS. 인 메모리 기반, JDBC API 지원, 브라우저에서 접속 가능한 콘솔 제공.
 * `application.yml` 설정
