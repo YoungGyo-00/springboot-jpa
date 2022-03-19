@@ -7,6 +7,17 @@ JPA 끄적끄적
 * DB에 저장하기 위해 유저가 정의한 클래스 -> Domain
 * 일반적으로 RDBMS에서 Table을 객체화
 * [Entity & Mapping 참고자료](https://gmlwjd9405.github.io/2019/08/11/entity-mapping.html)
+  * `@Transient` : 필드에 매핑(x), 객체에 임시로 보관
+  * `@Enumerated` : `EnumType.STRING`-> enum 이름을 데이터베이스에 저장
+  * `@Column`
+    * `name` : 필드에 매핑할 테이블 컬럼 이름
+    * `nullable`
+    * `unique` : `@Table`의 `uniqueConstraints`와 같지만, 한 컬럼에 대한 제약조건
+  * `@GeneratedValue`
+    * `IDENTITY` : 기본 키 생성을 데이터베이스에 위임(=`AUTO_INCREMENT`)
+    * `SEQUENCE` : 데이터베이스 시퀀스를 사용해서 기본 키 할당
+    * `TABLE` : 키 생성 테이블 사용
+    * `AUTO` : 데이터베이스 방식에 따라 자동 선택(`Default`) -> ex) MySQL -> IDENTITY
 ---
 ### JPA CRUD
 * JpaRepository interface 상속(Repository)
