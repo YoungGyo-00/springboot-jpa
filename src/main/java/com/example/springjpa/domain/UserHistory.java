@@ -2,35 +2,31 @@ package com.example.springjpa.domain;
 
 import com.example.springjpa.domain.listener.Auditable;
 import com.example.springjpa.domain.listener.MyEntityListener;
-import com.example.springjpa.domain.listener.UserEntityListener;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
-@Data
-@Builder
 @Entity
-@EntityListeners(value = { UserEntityListener.class })
+@Data
+@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity implements Auditable {
-
+public class UserHistory extends BaseEntity implements Auditable {
     @Id
     @GeneratedValue
     private Long id;
 
-    @NonNull
+    private Long userId;
+
     private String name;
 
-    @NonNull
     private String email;
-
-    @Enumerated(value = EnumType.STRING)
-    private Gender gender;
-
 }

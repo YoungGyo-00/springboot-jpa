@@ -3,7 +3,7 @@ JPA 끄적끄적
 
 ---
 ## 필요 개념
-###Entity
+### Entity
 * DB에 저장하기 위해 유저가 정의한 클래스 -> Domain
 * 일반적으로 RDBMS에서 Table을 객체화
 * [Entity & Mapping 참고자료](https://gmlwjd9405.github.io/2019/08/11/entity-mapping.html)
@@ -60,7 +60,31 @@ JPA 끄적끄적
 * `intellij database` 설정
   * server 실행 시 H2 URL 복사 -> 우측 상단 Database 탭 URL 복사
   
+### Entity Listener
+* Entity의 변화를 감지해 같은 테이블과 다른 테이블 모두 데이터를 조작
+* [Hibernate docs - callback methods](https://docs.jboss.org/hibernate/stable/entitymanager/reference/en/html/listeners.html)
+![Callback Methods](./src/main/resources/static/HibernateCallbacks.png)
+* `listener Class`에는 의존성이 주입되지 않음 -> `BeanUtils` Component Class
+  ```
+    @Component
+    public class BeanUtils implements ApplicationContextAware {
+    private static ApplicationContext applicationContext;
 
+        @Override
+        public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+            BeanUtils.applicationContext = applicationContext;
+        }
+
+        public static <T> T getBean(Class<T> clazz){
+            return applicationContext.getBean(clazz);
+        }
+    }
+
+  ```
+* BaseEntity Class
+  * `@MappedSuperclass` : JPA Entity `createDate`, `modiifiedDate`를 컬럼으로
+  * `@EntityListeners(AuditingEntityListener.class)` : Auditing 기능 사용
+  * `@CreatedDate`, `@LastModifiedDate`
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜

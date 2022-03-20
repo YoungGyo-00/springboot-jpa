@@ -18,6 +18,8 @@ import java.util.Optional;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     void crud(){
@@ -104,6 +106,31 @@ class UserRepositoryTest {
         userRepository.findAll().forEach(System.out::println);
 
         System.out.println(userRepository.findRawRecord().get("gender"));
+    }
 
+    @Test
+    void prePersistTest(){
+        User user = new User();
+        user.setEmail("younggyo@naver.com");
+        user.setName("younggyo");
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findById(1L).orElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    void userHistoryTest(){
+        User user = new User();
+        user.setName("younggyo");
+        user.setEmail("younggyo@naver.com");
+
+        userRepository.save(user);
+
+        user.setName("young");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 }
