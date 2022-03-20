@@ -1,5 +1,6 @@
 package com.example.springjpa.domain;
 
+import com.example.springjpa.domain.listener.Auditable;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,7 +15,7 @@ import java.util.Locale;
 @Data
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener.class)
-public class BaseEntity {
+public class BaseEntity implements Auditable {
     @CreatedDate
     private LocalDateTime createdAt;
 

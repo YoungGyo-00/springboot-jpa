@@ -59,7 +59,7 @@ JPA 끄적끄적
   ``` 
 * `intellij database` 설정
   * server 실행 시 H2 URL 복사 -> 우측 상단 Database 탭 URL 복사
-  
+---
 ### Entity Listener
 * Entity의 변화를 감지해 같은 테이블과 다른 테이블 모두 데이터를 조작
 * [Hibernate docs - callback methods](https://docs.jboss.org/hibernate/stable/entitymanager/reference/en/html/listeners.html)
@@ -85,6 +85,11 @@ JPA 끄적끄적
   * `@MappedSuperclass` : JPA Entity `createDate`, `modiifiedDate`를 컬럼으로
   * `@EntityListeners(AuditingEntityListener.class)` : Auditing 기능 사용
   * `@CreatedDate`, `@LastModifiedDate`
+---
+### Relation
+* `@OneToOne`
+  * 일대일 단방향 관계를 매핑, `@JoinColumn` 적용
+  * 반대편에 `mappedBy` 적용 시, 양방향 관계 매핑 + 읽기 전용 필드
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜

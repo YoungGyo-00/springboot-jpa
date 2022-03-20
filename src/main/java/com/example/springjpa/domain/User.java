@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @EntityListeners(value = { UserEntityListener.class })
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity implements Auditable {
+public class User extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull

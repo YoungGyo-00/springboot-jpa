@@ -1,29 +1,31 @@
 package com.example.springjpa.domain;
 
-import com.example.springjpa.domain.listener.Auditable;
-import com.example.springjpa.domain.listener.MyEntityListener;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Data
 @NoArgsConstructor
+@Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserHistory extends BaseEntity {
+public class Book extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
     private String name;
 
-    private String email;
+    private String category;
+
+    private Long authorId;
+
+    private Long publisherId;
+
+    @OneToOne(mappedBy = "book")
+    @ToString.Exclude
+    private BookReviewInfo bookReviewInfo;
 }
