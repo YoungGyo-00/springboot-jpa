@@ -23,11 +23,11 @@ JPA 끄적끄적
 * JpaRepository interface 상속(Repository)
   * 기본적으로 CRUD가 가능하도록 제공.
   * Spring Data JPA에서ㅓ 제공하는 JpaRepository 인터페이스 상속 시, @Repository (x)
-  ```
+  ```java
     public interface UserRepository extends JpaRepository<User, Long> {
-    * Generic <T, ID(PK 값)>
-        * T : Entity Type
-        * ID : 식별자 Type(PK)
+    //  Generic <T, ID(PK 값)>
+    //     T : Entity Type
+    //     ID : 식별자 Type(PK)
   }
   ```
 * 주요 Method :
@@ -46,7 +46,7 @@ JPA 끄적끄적
 ### Embedded H2
 * H2 Database : 자바 기반의 초 경량 RDBMS. 인 메모리 기반, JDBC API 지원, 브라우저에서 접속 가능한 콘솔 제공.
 * `application.yml` 설정
-  ```
+  ```yaml
     spring:
       h2:
         console:
@@ -112,3 +112,7 @@ JPA 끄적끄적
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
+
+
+* 순환 참조 : `1:N`, `N:1`, `양방향 관계` 에서 발생<br/>　　　　　`@ToString.Exclude`이용하여 끊어주면 됨.
+
