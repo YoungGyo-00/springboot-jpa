@@ -6,19 +6,22 @@ import com.example.springjpa.repository.UserHistoryRepository;
 import com.example.springjpa.support.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PreUpdate;
 
 public class UserEntityListener {
-    @PreUpdate
+    @PostPersist
+    @PostUpdate
     public void preUpdate(Object o) {
         UserHistoryRepository userHistoryRepository = BeanUtils.getBean(UserHistoryRepository.class);
 
         User user = (User) o;
 
         UserHistory userHistory = new UserHistory();
-        userHistory.setUserId(user.getId());
         userHistory.setEmail(user.getEmail());
         userHistory.setName(user.getName());
+        userHistory.setUser(user);
 
         userHistoryRepository.save(userHistory);
     }

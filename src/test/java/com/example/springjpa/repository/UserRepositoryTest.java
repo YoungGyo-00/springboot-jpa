@@ -2,6 +2,7 @@ package com.example.springjpa.repository;
 
 import com.example.springjpa.domain.Gender;
 import com.example.springjpa.domain.User;
+import com.example.springjpa.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,5 +133,27 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void userRelationTest(){
+        User user = new User();
+        user.setName("david");
+        user.setEmail("david@naver.com");
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        user.setName("younggyo");
+
+        userRepository.save(user);
+
+        user.setEmail("younggyo@naver.com");
+
+        userRepository.save(user);
+
+        List<UserHistory> result = userRepository.findByEmail("younggyo@naver.com").getUserHistories();
+
+        result.forEach(System.out::println);
     }
 }

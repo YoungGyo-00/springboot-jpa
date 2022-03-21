@@ -90,6 +90,25 @@ JPA 끄적끄적
 * `@OneToOne`
   * 일대일 단방향 관계를 매핑, `@JoinColumn` 적용
   * 반대편에 `mappedBy` 적용 시, 양방향 관계 매핑 + 읽기 전용 필드
+
+
+* `@OneToMany` -> 권장(x)
+  * `Team`이 `Member`를 알고싶은데, 역은 알고 싶지 않음.
+
+
+  ![@OneToMany](./src/main/resources/static/OneToMany.png)
+
+  * `1:N 단방향` -> 일(1)이 연관관계 주인 -> 보통 테이블 관점에서 외래키(N), 1쪽에서 관리하겠다.
+  * `Transaction commit` -> `create one-to-many` 주석과 `update` 쿼리 동작 -> 성능상 좋지 않음
+  * `@JoinColumn`을 꼭 사용 -> 아닐 시, 중간 테이블이 하나 추가됨
+  * `해결 방법`
+    * 객체 입장에서 보면, 반대방향으로 참조할 필요가 없는데 관계를 하나 더 만드는 것이지만, DB 입장으론 설계의 방향을 조금 더 맞춰서 운영상 유지보수 쉬움.
+    * `insertable`, `updatable`를 `False` -> `read` 전용으로 만듬(공식 x)
+    * `N:1` 방법으로 사용하도록 권장 -> 필요할 경우 양방향 매핑
+    
+
+* `@ManyToOne`
+  * 
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
