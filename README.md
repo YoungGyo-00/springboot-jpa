@@ -108,7 +108,8 @@ JPA 끄적끄적
     
 
 * `@ManyToOne`
-  * 
+  * @`Optional`]
+  * DB 설계 상 1:N에서 N에 (외래키) 저장. 
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
