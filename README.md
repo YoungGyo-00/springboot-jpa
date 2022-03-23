@@ -44,7 +44,9 @@ JPA 끄적끄적
   
 ---
 ### Embedded H2
-* H2 Database : 자바 기반의 초 경량 RDBMS. 인 메모리 기반, JDBC API 지원, 브라우저에서 접속 가능한 콘솔 제공.
+* `H2 Database` : 자바 기반의 초 경량 RDBMS. 인 메모리 기반, JDBC API 지원, 브라우저에서 접속 가능한 콘솔 제공.
+* `JPA` : `Hibernate` 추상화한 `interface` -> `JPA`와 `Hibernate`는 호환성이 잘됨,
+* `Spring Starter` 에 구현체가 기본적으로 포함.
 * `application.yml` 설정
   ```yaml
     spring:
