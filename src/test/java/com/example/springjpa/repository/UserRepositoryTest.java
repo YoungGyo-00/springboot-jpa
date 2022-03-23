@@ -11,11 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@Transactional
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
@@ -23,8 +25,13 @@ class UserRepositoryTest {
     private UserHistoryRepository userHistoryRepository;
 
     @Test
+    void mysqlTest(){
+
+    }
+
+    @Test
     void crud(){
-        userRepository.save(new User("david", "david@fastcampus.com"));
+        userRepository.save(new User());
 
         User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
         user.setEmail("martin-updated@fastcampus.com");

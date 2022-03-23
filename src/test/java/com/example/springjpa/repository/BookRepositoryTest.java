@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;

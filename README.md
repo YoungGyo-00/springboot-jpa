@@ -120,10 +120,32 @@ JPA 끄적끄적
   * 현업에서 자주 사용하진 않음.
   * Ex) `User`, `Product` -> `user_product` (x) 중간 테이블을 생성하지 않음.
   * `Order` Table을 1:N, N:1로 각각 매핑해서 만들어 연결.
+  
+### MySQL DB 연결
+* `Dialect` : 각 `DBMS`마다 `Query`를 맞춰주는 용도
+  ```yaml
+  jpa:
+    generate-ddl: true # 자동으로 Entity를 ddl
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/사용databasename
+    username: root
+    password: pwd
+    initialization-mode: always
+  ```
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
 
+
+* [JpaSystemException: could not execute statement; nested exception...](https://snepbnt.tistory.com/302)
+  * 테스트코드 Junit 실행시 예외가 발생하는 경우,
+  * repository 관련 클래스를 실행할 때 예외가 발생하는 경우
+  * 쿼리 실행할 수 없는 문장이라는 말
+  * <strong><u>해결 방법<u/>
+    * `Entity`에 `Not Null` 옵션을 달고, `Null` 값이 들어가게 설계하는게 가장 일반적이다.
+    * `Auto_Increment` 설정 -> 자동으로 값이 채워지게.
 
 * 순환 참조 : `1:N`, `N:1`, `양방향 관계` 에서 발생<br/>　　　　　`@ToString.Exclude`이용하여 끊어주면 됨.
 
