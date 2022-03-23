@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,32 +16,17 @@ import java.util.List;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Book extends BaseEntity{
+public class Author extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    private String category;
-
-    private Long authorId;
-
-    @OneToOne(mappedBy = "book")
-    @ToString.Exclude
-    private BookReviewInfo bookReviewInfo;
+    private String country;
 
     @OneToMany
-    @JoinColumn(name = "book_id")
-    @ToString.Exclude
-    private List<Review> reviews = new ArrayList<>();
-
-    @ManyToOne
-    @ToString.Exclude
-    private Publisher publisher;
-
-    @OneToMany
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "author_id")
     @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 

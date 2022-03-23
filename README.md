@@ -90,7 +90,8 @@ JPA 끄적끄적
 * `@OneToOne`
   * 일대일 단방향 관계를 매핑, `@JoinColumn` 적용
   * 반대편에 `mappedBy` 적용 시, 양방향 관계 매핑 + 읽기 전용 필드
-
+    * 주인은 `mappedBy` 속성을 사용하지 않음
+    * 연관관계의 주인을 정할 수 있음
 
 * `@OneToMany` -> 권장(x)
   * `Team`이 `Member`를 알고싶은데, 역은 알고 싶지 않음.
@@ -108,8 +109,15 @@ JPA 끄적끄적
     
 
 * `@ManyToOne`
-  * @`Optional`]
+  * @`Optional`
   * DB 설계 상 1:N에서 N에 (외래키) 저장. 
+  * `NullPoint Exception`을 방지하기 위해 new arrayList<>(); -> 선언
+
+
+* `@ManyToMany`
+  * 현업에서 자주 사용하진 않음.
+  * Ex) `User`, `Product` -> `user_product` (x) 중간 테이블을 생성하지 않음.
+  * `Order` Table을 1:N, N:1로 각각 매핑해서 만들어 연결.
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
