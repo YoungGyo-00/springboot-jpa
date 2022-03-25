@@ -4,6 +4,7 @@ import com.example.springjpa.domain.Book;
 import com.example.springjpa.domain.Publisher;
 import com.example.springjpa.domain.Review;
 import com.example.springjpa.domain.User;
+import com.example.springjpa.repository.dto.BookStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -87,6 +88,19 @@ class BookRepositoryTest {
         System.out.println(bookRepository.findById(3L));
     }
 
+    @Test
+    void converterTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+        Book book = new Book();
+        book.setName("또다른 IT전문서적");
+        book.setStatus(new BookStatus(200));
+
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRawRecord().values());
+    }
+
     private void givenBookAndReview(){
         givenReview(givenUser(), givenBook(givenPusblisher()));
     }
@@ -122,4 +136,6 @@ class BookRepositoryTest {
 
         return publisherRepository.save(publisher);
     }
+
+
 }

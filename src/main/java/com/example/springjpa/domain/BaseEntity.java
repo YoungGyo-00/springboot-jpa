@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -17,8 +18,10 @@ import java.util.Locale;
 @EntityListeners(value = AuditingEntityListener.class)
 public class BaseEntity implements Auditable {
     @CreatedDate
+    @Column(columnDefinition = "datetime(6) default now(6)", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(columnDefinition = "datetime(6) default now(6)", nullable = false)
     private LocalDateTime updatedAt;
 }
