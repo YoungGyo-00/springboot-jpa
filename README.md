@@ -134,6 +134,44 @@ JPA 끄적끄적
     password: pwd
     initialization-mode: always
   ```
+  
+### 영속성 컨텍스트 : `Entity`를 영구 저장하는 환경
+* `em.persist(member)` 
+  * 엔티티 매니저를 통해 회원 엔티티를 영속성 컨텍스트에 저장
+
+
+* 엔티티 생명주기
+  * `비영속(new/transient)`: 관계 없는 상태
+    ```java
+    Member member = new Member();
+    ```
+  * `영속(managed)` : 영속성 컨텍스트에 저장된 상태
+    ```java
+    en.persist(member);
+    ```
+  * `준영속(detached)` : 저장되었다가 분리된 상태
+    ```java
+    // 엔티티를 컨텍스트에서 분리  
+    em.detach(member);
+    // 컨텍스트를 비워도 준영속 상태  
+    em.clear();
+    // 컨텍스트를 종료해도 준영속 상태
+    em.close();
+    ```
+    * 1차 캐시, 쓰기 지연, 변경 감지, 지연 로딩을 포한한 어떠한 기능 제공 x
+  * `삭제(removed)` : 삭제된 상태
+    ```java
+    em.remove(member);
+    ```
+
+* `em.flush()` : 영속성 컨텍스트의 변경 내용을 DB에 반영
+
+![엔티티 생명주기](./src/main/resources/static/EntityLifeCycle.png)
+
+
+* 영속성 컨텍스트가 엔티티를 관리하면 좋은 점
+  * 1차 캐시, 동일성 보장, 트랜잭션, 변경감지, 지연로딩
+
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
