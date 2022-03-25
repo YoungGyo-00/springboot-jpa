@@ -209,6 +209,24 @@ JPA 끄적끄적
     * `REQUIRED(Defalut)` : 트랜잭션 진행 중 -> 해당 속성 따름, 아니면 새로 생성
     * `REQUIRES_NEW` : 항상 새로운 트랜잭션 생성
     * `NESTED` : 오류 발생 이전까지의 트랜잭션 커밋
+
+
+### 영속성 전이
+* `Cascade` 
+  * 특정 엔티티에 대한 작업 수행 시, 관련 엔티티에도 동일 작업 수행
+  * `ALL` : 모든 `Cascade` 진행
+  * `PERSIST` : 영속화할 떄, 연관 엔티티도 함께
+  * `MERGE` : 병합할 때, 연관 엔티티도 함께
+  * `REMOVE` : 엔티티 제거할 때, 연관 엔티티도 모두 제거
+  * `DETACH` : 부모 엔티티 detach() 수행 시, 연관 엔티티도 detach()
+  * `REFRESH` : 새로고침할 떄, 연관 엔티티도 모두 새로고침
+
+
+* `고아 객체(ORPHAN)`
+  * 부모와 연관 관계가 끊어진 자식 엔티티를 자동 삭제
+  * `orphanRemoval = true`
+  * `@Where(clause = "deleted = false")`
+    * 엔티티 조회 시, 일괄적인 `Where`조건 추가
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
@@ -218,7 +236,7 @@ JPA 끄적끄적
   * 테스트코드 Junit 실행시 예외가 발생하는 경우,
   * repository 관련 클래스를 실행할 때 예외가 발생하는 경우
   * 쿼리 실행할 수 없는 문장이라는 말
-  * <strong><u>해결 방법<u/>
+  * <strong><u>해결 방법</u></strong>
     * `Entity`에 `Not Null` 옵션을 달고, `Null` 값이 들어가게 설계하는게 가장 일반적이다.
     * `Auto_Increment` 설정 -> 자동으로 값이 채워지게.
 
