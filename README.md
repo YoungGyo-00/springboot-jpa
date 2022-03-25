@@ -22,7 +22,7 @@ JPA 끄적끄적
 ### JPA CRUD
 * JpaRepository interface 상속(Repository)
   * 기본적으로 CRUD가 가능하도록 제공.
-  * Spring Data JPA에서ㅓ 제공하는 JpaRepository 인터페이스 상속 시, @Repository (x)
+  * Spring Data JPA에서 제공하는 JpaRepository 인터페이스 상속 시, @Repository (x)
   ```java
     public interface UserRepository extends JpaRepository<User, Long> {
     //  Generic <T, ID(PK 값)>
@@ -172,6 +172,43 @@ JPA 끄적끄적
 * 영속성 컨텍스트가 엔티티를 관리하면 좋은 점
   * 1차 캐시, 동일성 보장, 트랜잭션, 변경감지, 지연로딩
 
+
+### 트랜잭션 `@Transactional`
+* 데이터베이스의 상태를 변경하는 작업 = 한번에 수행되어야 하는 연산들
+* begin, commit
+* 예외 시, rollback
+* 4가지 성질
+  * `원자성(Atomicity)`
+    * 모두 성공 또는 모두 실패
+  * `일관성(Consistency)`
+    * 일관성 있는 데이터베이스 상태 유지
+  * `격리성(isolation)`
+    * 동시에 실행되는 트랜잭션들이 서로 영향 x
+  * `영속성(Durability)`
+    * 트랜잭션 성공 -> 결과 항상 저장
+
+
+
+* `@Transactional` options
+  * `isolation`
+    * 일관성없는 데이터 허용 수준 설정
+  ```java
+  @Transactional(isolation=Isolation.DEFAULT)
+  public void addUser(UserDTO dto) throws Exception {
+    // 로직 구현
+  }
+  ```
+    * `DEFAULT` : 기본 수준
+    * `READ_UNCOMMITED` (level 0) : 커밋되지 않은 데이터 읽기 허용
+    * `READ_COMMITED` (level 1) : 커밋된 데이터에 대한 읽기 허용
+    * `REPEATEABLE_READ` (level 2) : 동일 필드에 대해 다중 접근 시 동일 결과 보장
+    * `SERIALIZABLE` (level 3) : 가장 높은 격리, 성능 저하의 우려
+
+
+  * `Propagation`
+    * `REQUIRED(Defalut)` : 트랜잭션 진행 중 -> 해당 속성 따름, 아니면 새로 생성
+    * `REQUIRES_NEW` : 항상 새로운 트랜잭션 생성
+    * `NESTED` : 오류 발생 이전까지의 트랜잭션 커밋
 ## 실행 오류
 * ['dataSourceScriptDatabaseInitializer' defined in class path resource](https://www.inflearn.com/questions/224708)
  : application.yml DB 테이블 자동 생성 오류, data.sql -> import.sql 파일 이름 변경. spring 2.5.0 버전부터 사용법 바뀜
